@@ -1,0 +1,78 @@
+with tab1:
+    st.header("Key Performance Indicators")
+    c1, c2, c3, c4 = st.columns(4)
+    with c1:
+        st.metric("Total Revenue", f"${filtered_df['Sales Revenue'].sum():,}")
+    with c2:
+        st.metric("Total Gross Profit", f"${filtered_df['Gross Profit'].sum():,}")
+    with c3:
+        st.metric("Avg Gross Margin", f"{filtered_df['Gross Margin (%)'].mean():.1f}%")
+    with c4:
+        st.metric("Total Units Sold", f"{filtered_df['Units Sold'].sum():,}")
+
+    st.subheader("Top Products by Margin")
+    top_products = filtered_df.nlargest(8, 'Gross Margin (%)')[['Product Name', 'Division', 'Gross Margin (%)', 'Gross Profit']]
+    st.dataframe(top_products, use_container_width=True)
+
+with tab2:
+    st.header("Product-Level Profitability Analysis")
+    st.dataframe(filtered_df[['Product Name', 'Category', 'Gross Margin (%)', 
+                              'Gross Profit', 'Profit per Unit', 'Revenue Contribution (%)']], 
+                 use_container_width=True)
+
+    fig_margin = px.bar(filtered_df.sort_values('Gross Margin (%)', ascending=False),
+                        x='Product Name', y='Gross Margin (%)', color='Division',
+                        title="Gross Margin by Product")
+    st.plotly_chart(fig_margin, use_container_width=True)
+
+with tab3:
+    st.header("Division & Factory Performance")
+    div_summary = filtered_df.groupby('Division').agg({
+        'Sales Revenue': 'sum',
+        'Gross Profit': 'sum',
+        'Gross Margin (%)': 'mean',
+        'Units Sold': 'sum'
+    }).round(2)
+    st.dataframe(div_summary, use_container_width=True)
+
+    st.subheader("Factory Locations")
+    map_df = pd.DataFrame({
+        'lat': [v['lat'] for v in factory_coords.values()],
+        'lon': [v['lon'] for v in factory_coords.values()],
+        'Factory': list(factory_coords.keys())
+    })
+    st.map(map_df, size=800)
+
+with tab4:
+    st.header("Profit Concentration (Pareto) & Cost Diagnostics")
+    
+    df_sorted = filtered_df.sort_values('Gross Profit', ascending=False).copy()
+    df_sorted['Cumulative Profit %'] = df_sorted['Gross Profit'].cumsum() / df_sorted['Gross Profit'].sum() * 100
+
+    fig_pareto = px.line(df_sorted, x=range(1, len(df_sorted)+1), y='Cumulative Profit %',
+                         title="Pareto Analysis - Profit Concentration", markers=True)
+    st.plotly_chart(fig_pareto, use_container_width=True)
+
+    fig_cost = px.scatter(filtered_df, x='Cost of Goods', y='Gross Margin (%)',
+                          color='Division', hover_name='Product Name',
+                          title="Cost vs Margin Diagnostics")
+    st.plotly_chart(fig_cost, use_container_width=True)
+
+with tab5:
+    st.header("Methodology & Key Insights")
+    st.markdown("""
+    **Data Cleaning & Validation**  
+    • Validated cost, sales & units values  
+    • Removed zero or invalid records  
+    • Standardized labels
+    
+    **Profitability Metrics Calculated**  
+    • Gross Margin (%), Profit per Unit, Revenue & Profit Contribution
+    
+    **Analysis Performed**  
+    • Product Categorization (High-Profit, High-Sales/Low-Margin, etc.)  
+    • Pareto Analysis  
+    • Division-wise Performance  
+    • Cost Structure Diagnostics
+    """)
+    st.success("✅ Almost all points of the given Analytical Methodology are covered in this dashboard.")
