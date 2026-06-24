@@ -1,0 +1,5 @@
+df['Gross Profit'] = df['Sales Revenue'] - df['Cost of Goods']
+df['Gross Margin (%)'] = (df['Gross Profit'] / df['Sales Revenue'] * 100).round(2)
+df['Profit per Unit'] = (df['Gross Profit'] / df['Units Sold']).round(2)
+df['Revenue Contribution (%)'] = (df['Sales Revenue'] / df['Sales Revenue'].sum() * 100).round(2)
+df['Profit Contribution (%)'] = (df['Gross Profit'] / df['Gross Profit'].sum() * 100).round(2)
