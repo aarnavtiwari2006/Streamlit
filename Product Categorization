@@ -1,0 +1,11 @@
+def categorize_product(row):
+    if row['Gross Profit'] >= df['Gross Profit'].quantile(0.75) and row['Gross Margin (%)'] >= 50:
+        return "High-Profit / High-Margin"
+    elif row['Units Sold'] >= df['Units Sold'].quantile(0.75) and row['Gross Margin (%)'] < 40:
+        return "High-Sales / Low-Margin"
+    elif row['Gross Profit'] <= df['Gross Profit'].quantile(0.25) and row['Units Sold'] <= df['Units Sold'].quantile(0.25):
+        return "Low-Sales / Low-Profit"
+    else:
+        return "Medium Performer"
+
+df['Category'] = df.apply(categorize_product, axis=1)
