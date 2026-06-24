@@ -1,0 +1,2 @@
+st.sidebar.markdown("---")
+st.sidebar.info("📌 Built as per Analytical Methodology | Nassau Candy Distributor")
