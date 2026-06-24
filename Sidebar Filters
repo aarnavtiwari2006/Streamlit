@@ -4,3 +4,10 @@ divisions = ['All'] + sorted(df['Division'].unique())
 selected_division = st.sidebar.selectbox("Division", divisions)
 search_product = st.sidebar.text_input("Search Product")
 margin_threshold = st.sidebar.slider("Minimum Gross Margin (%)", 0, 100, 20)
+
+filtered_df = df.copy()
+if selected_division != 'All':
+    filtered_df = filtered_df[filtered_df['Division'] == selected_division]
+if search_product:
+    filtered_df = filtered_df[filtered_df['Product Name'].str.contains(search_product, case=False)]
+filtered_df = filtered_df[filtered_df['Gross Margin (%)'] >= margin_threshold]
