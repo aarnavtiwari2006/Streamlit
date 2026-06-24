@@ -1,0 +1,6 @@
+st.sidebar.header("🔍 Filters")
+
+divisions = ['All'] + sorted(df['Division'].unique())
+selected_division = st.sidebar.selectbox("Division", divisions)
+search_product = st.sidebar.text_input("Search Product")
+margin_threshold = st.sidebar.slider("Minimum Gross Margin (%)", 0, 100, 20)
