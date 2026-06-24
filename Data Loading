@@ -1,0 +1,24 @@
+products_data = {
+    'Division': ['Chocolate', 'Chocolate', 'Chocolate', 'Chocolate', 'Chocolate',
+                 'Sugar', 'Sugar', 'Sugar', 'Sugar', 'Other',
+                 'Sugar', 'Sugar', 'Other', 'Other', 'Other'],
+    'Product Name': [
+        "Wonka Bar - Nutty Crunch Surprise", "Wonka Bar - Fudge Mallows",
+        "Wonka Bar - Scrumdiddlyumptious", "Wonka Bar - Milk Chocolate",
+        "Wonka Bar - Triple Dazzle Caramel", "Laffy Taffy", "SweeTARTS",
+        "Nerds", "Fun Dip", "Fizzy Lifting Drinks", "Everlasting Gobstopper",
+        "Hair Toffee", "Lickable Wallpaper", "Wonka Gum", "Kazookles"
+    ],
+    'Factory': ["Let's O' Nuts", "Let's O' Nuts", "Let's O' Nuts", "Wicked Choccy's",
+                "Wicked Choccy's", "Sugar Shack", "Sugar Shack", "Sugar Shack",
+                "Sugar Shack", "Sugar Shack", "Secret Factory", "The Other Factory",
+                "Secret Factory", "Secret Factory", "The Other Factory"],
+    'Units Sold': [12000, 8500, 15000, 22000, 9500, 18000, 14000, 16000, 11000,
+                   7000, 13000, 8000, 6000, 9000, 5000],
+    'Sales Revenue': [240000, 170000, 375000, 440000, 237500, 90000, 70000,
+                      80000, 55000, 35000, 65000, 40000, 30000, 45000, 25000],
+    'Cost of Goods': [120000, 85000, 150000, 220000, 118750, 54000, 42000,
+                      48000, 33000, 21000, 39000, 24000, 18000, 27000, 15000],
+}
+
+df = pd.DataFrame(products_data)
